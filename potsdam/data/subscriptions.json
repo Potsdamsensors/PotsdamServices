@@ -1,0 +1,10 @@
+{
+  "subscriptions" : [
+    [{"name" : "basic"},
+    {"duration":8}],
+     [{"name" : "starter"},
+    {"duration":56}],
+     [{"name" : "premium"},
+    {"duration":224}]
+    ]
+}

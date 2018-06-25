@@ -1,0 +1,25 @@
+
+  [
+    {
+    "account_id" : "abc123456789",
+    "devices": ["a001", "a002", "a003"]
+    },
+     {
+    "account_id" : "def123456789",
+    "devices": ["b001", "b002", "b003"]
+    },
+     {
+    "account_id" : "ghi123456789",
+    "devices": ["c001", "c002", "c003"]
+    }
+    ,
+     {
+    "account_id" : "jkl123456789",
+    "devices": ["m001", "m002", "m003", "m004", "m005"]
+    }
+    ,
+     {
+    "account_id" : "mno123456789",
+    "devices": ["y001", "b002", "t003", "fg04", "y005"]
+    }
+  ]

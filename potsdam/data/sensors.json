@@ -1,0 +1,10 @@
+{
+  "sensors" : [
+    [{"name" : "pots001"},
+    {"channels":5}],
+     [{"name" : "pots003"},
+    {"channels":8}],
+     [{"name" : "pots006"},
+    {"channels":3}]
+    ]
+}

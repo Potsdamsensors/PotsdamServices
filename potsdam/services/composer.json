@@ -1,0 +1,5 @@
+{
+    "require": {
+        "terwey/slim-swagger": "^0.0.3"
+    }
+}
