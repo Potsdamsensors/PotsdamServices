@@ -77,7 +77,7 @@ class Device{
 			$data_res = $db->getResult();*/
 
 			$where_clause = "sensor_data.sensor_id=" .	"$sensor_id";
-     		$db->select('data_packets','data_packets.time_stamp, data_packets.latitude, data_packets.longitude, sensor_data.channel_1 as ch_1, sensor_data.channel_2 as ch_2, sensor_data.channel_3 as ch_3', 'sensor_data ON sensor_data.id = data_packets.id', $where_clause, 'data_packets.id DESC'); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
+     		$db->select('data_packets','sensor_data.time_stamp, sensor_data.latitude, sensor_data.longitude, sensor_data.channel_1 as ch_1, sensor_data.channel_2 as ch_2, sensor_data.channel_3 as ch_3', 'sensor_data ON sensor_data.id = data_packets.id', $where_clause, 'data_packets.id DESC'); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
 			$data_res = $db->getResult();
 
 			if (sizeof($data_res) > 0) 
@@ -116,7 +116,7 @@ class Device{
      		//select('CRUDClass','CRUDClass.id,CRUDClass.name,CRUDClassChild.name','CRUDClassChild ON CRUDClass.id = parentId','CRUDClass.name="Name 1"','id DESC');
 
      		$where_clause = "data_packets.device_id=" .	"$device_id";
-     		$db->select('data_packets','data_packets.time_stamp, data_packets.latitude, data_packets.longitude, sensor_data.channel_1 as ch_1, sensor_data.channel_2 as ch_2, sensor_data.channel_3 as ch_3', 'sensor_data ON sensor_data.id = data_packets.id', $where_clause, 'data_packets.id DESC'); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
+     		$db->select('data_packets','sensor_data.time_stamp, sensor_data.latitude, sensor_data.longitude, sensor_data.channel_1 as ch_1, sensor_data.channel_2 as ch_2, sensor_data.channel_3 as ch_3', 'sensor_data ON sensor_data.id = data_packets.id', $where_clause, 'data_packets.id DESC'); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
 			$data_res = $db->getResult();
 
 			if (sizeof($data_res) > 0) 
@@ -267,6 +267,7 @@ class Device{
 					//check if device belongs to the account
 					$device_id_array = $dev_id_res[0];
 					$device_id_int = $device_id_array["id"];
+					$timestamp_date = date("Y-m-d H:i:s", $timestamp)	;
 
 					$where_clause = "sensor_name=" . "'$sensor_name'";
 					$db->select('sensors','id', NULL, $where_clause, NULL); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
@@ -279,8 +280,8 @@ class Device{
 						$sensor_id_int = $sensor_id_array["id"];
 
 						//Plain style
-						$sql="INSERT INTO sensor_data (sensor_id," . $channel_sql_query_trim . ") VALUES
-						($sensor_id_int," . $channel_sql_query_val_trim . ")";
+						$sql="INSERT INTO sensor_data (sensor_id," . $channel_sql_query_trim . ", time_stamp, latitude, longitude) VALUES
+						($sensor_id_int," . $channel_sql_query_val_trim . ", '$timestamp_date', '$latitude', '$longitude')";
 
 						//echo "query - ".$sql;
 
@@ -290,11 +291,11 @@ class Device{
 						if (sizeof($res) > 0) 
 						{
 							$sensor_data_id = $res;
-							$timestamp_date = date("Y-m-d H:i:s", $timestamp)	;
+							
 
 							//Plain style
-							$sql="INSERT INTO data_packets (account_id, device_id, sensor_data_id, time_stamp, latitude, longitude) VALUES
-							($account_id_int, $device_id_int, $sensor_data_id, '$timestamp_date', '$latitude', '$longitude')";
+							$sql="INSERT INTO data_packets (account_id, device_id, sensor_data_id) VALUES
+							($account_id_int, $device_id_int, $sensor_data_id)";
 
 							$db->sql($sql);
 							$res = $db->getResult();

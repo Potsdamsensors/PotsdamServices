@@ -35,7 +35,7 @@ function InsertSensorData()
 
     echo "<pre>";
 
-    $res = CallAPI ("POST", "http://codeneuron.com/rest/potsdam/services/staging/v1/app/addDeviceData", $data);
+    $res = CallAPI ("POST", "http://localhost/rest/potsdam/services/staging/v1/app/addDeviceData", $data);
     print_r($res);
 }
 
@@ -92,7 +92,7 @@ function CallAPI($method, $url, $data = false)
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
     $result = curl_exec($curl);
-
+    print_r($result);
     curl_close($curl);
 
     return $result;

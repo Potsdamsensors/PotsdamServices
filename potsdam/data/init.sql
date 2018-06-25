@@ -72,6 +72,9 @@ CREATE TABLE sensor_data (
 	channel_8 DECIMAL(10,2),
 	channel_9 DECIMAL(10,2),
 	channel_10 DECIMAL(10,2),
+	time_stamp timestamp,
+ 	latitude DECIMAL(11,8),
+ 	longitude DECIMAL(11,8),
 	PRIMARY KEY (id),
 	FOREIGN KEY (sensor_id) REFERENCES sensors(id)
 	);
@@ -82,9 +85,7 @@ CREATE TABLE data_packets (
  	account_id VARCHAR(40),
  	device_id INT,
  	sensor_data_id INT,
- 	time_stamp timestamp,
- 	latitude DECIMAL(11,8),
- 	longitude DECIMAL(11,8),
+ 	
 	PRIMARY KEY (id),
 	FOREIGN KEY (id) REFERENCES sensor_data(id),
 	FOREIGN KEY (device_id) REFERENCES devices(id)
@@ -95,6 +96,14 @@ ALTER TABLE accounts ADD NOTNULL (account_id);
 ALTER TABLE accounts MODIFY COLUMN accounts.account_id VARCHAR(40) NOT NULL;
 ALTER TABLE customers ADD sign_up_timestamp timestamp;
 ALTER TABLE customers ADD UNIQUE (customer_email);
+
+ALTER TABLE sensor_data ADD time_stamp timestamp;
+ALTER TABLE sensor_data ADD latitude DECIMAL(11,8);
+ALTER TABLE sensor_data ADD longitude DECIMAL(11,8);
+
+ALTER TABLE data_packets DROP COLUMN time_stamp;
+ALTER TABLE data_packets DROP COLUMN latitude;
+ALTER TABLE data_packets DROP COLUMN longitude;
 
 
 /*
